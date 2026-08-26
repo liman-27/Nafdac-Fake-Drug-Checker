@@ -1,13 +1,13 @@
 """
-STEP 2: Generate synthetic "suspicious" entries to pair with our genuine data.
+STEP 2: Generate synthetic "suspicious" entries to pair with genuine data for training.
 
-We don't have real counterfeit examples, so we simulate the 3 most common
-real-world counterfeiting patterns:
-  1. Typo/character-swap attacks on the product name
-  2. Tampered NRN (registration number) codes
+I don't have real counterfeit examples, so I used the 3 most common
+real-world counterfeiting patterns to simulate fakes for training, which are:
+  1. Typo/character-swap, attacks on the product name
+  2. Tampered NRN (registration number) codes, swapped or changed completely
   3. Completely fabricated product names
 
-This gives our classifier both classes (genuine=1, suspicious=0) to learn from.
+This gives the classifier both classes (genuine=1, suspicious=0) to learn from.
 """
 import csv
 import random
