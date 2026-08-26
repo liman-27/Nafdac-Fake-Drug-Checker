@@ -12,7 +12,7 @@ import csv
 
 def parse_category_file(filepath, category_name):
     """
-    Each line in our raw file looks like:
+    Each line in the raw file looks like:
     [Product Name** Form Ingredient Strength NRN: A6-100070](https://.../details/6931)
 
     I use a "regular expression" (regex) - a pattern-matching tool - to pull
