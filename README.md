@@ -1,5 +1,3 @@
-<div align="center">
-
 # AI-06: Fake Drug Text/Barcode Checker
 **Fighting counterfeit medicine in Nigeria with machine learning and NAFDAC's official Greenbook registry**
 
