@@ -84,21 +84,38 @@ patient away from treatment they actually need or they really should get.
 ```
 nafdac_checker/
 ├── data/
+
 │    raw_vaccines.txt              # Raw scraped text (Vaccines/Biologics)
+
 │    raw_drugs_plaintext.txt       # Raw scraped text (Drugs)
+
 │    nafdac_products_clean.csv     # 235 genuine products, cleaned
-│    training_data.csv             # Genuine + synthetic-fake, labeled
+
+|    training_data.csv             # Genuine + synthetic-fake, labeled
+
 │    features.csv                  # Numeric features for training
+
 │    fake_drug_model.joblib        # Trained model, ready to load
+
 ├── 01_parse_data.py                  # Parse Vaccines/Biologics
+
 ├── 01b_parse_drugs.py                # Parse Drugs (different raw format)
+
 ├── 02_generate_fakes.py              # Generate synthetic suspicious examples
+
 ├── 03_features.py                    # Feature engineering
+
 ├── 04_train_model.py                 # Train + evaluate the classifier
+
 ├── 05_app.py                         # Interactive checker app
+
 ├── scrape_full_nafdac.py             # Full scraper for all 6 NAFDAC categories
+
 ├── build_notebook.py                 # Assembles the .py scripts into the notebook
+
+
 ├── Fake_Drug_Checker.ipynb           # Full pipeline in one notebook
+
 └── README.md
 ```
 
