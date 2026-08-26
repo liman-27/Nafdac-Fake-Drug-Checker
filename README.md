@@ -85,9 +85,9 @@ patient away from treatment they actually need or they really should get.
 nafdac_checker/
 ├── data/
 
-│    raw_vaccines.txt              # Raw scraped text (Vaccines/Biologics)
+│    **raw_vaccines.txt**              #Raw scraped text (Vaccines/Biologics)
 
-│    raw_drugs_plaintext.txt       # Raw scraped text (Drugs)
+│    **raw_drugs_plaintext.txt**       #Raw scraped text (Drugs)
 
 │    nafdac_products_clean.csv     # 235 genuine products, cleaned
 
