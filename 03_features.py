@@ -4,8 +4,8 @@ STEP 3: Feature engineering.
 A machine learning model can't read "Amoxicilin" and just know it's wrong -
 it needs NUMBERS that capture the *pattern* of what looks suspicious.
 
-For every product entry we're checking, we compute 5 signals by comparing
-it against our genuine NAFDAC database:
+For every product entry I checked, I computed 5 signals by comparing
+it against the genuine NAFDAC database:
 
 1. name_similarity   - how close is this name to the CLOSEST genuine name?
                         (1.0 = exact match, 0.0 = nothing like it)
