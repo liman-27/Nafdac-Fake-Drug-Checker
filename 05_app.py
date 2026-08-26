@@ -1,7 +1,7 @@
 """
 STEP 5: The Fake Drug Text/Barcode Checker app.
 
-This ties everything together into the tool a real user (e.g. a pharmacist
+At this level everything was put together into the tool a real user (e.g. a pharmacist
 or a patient) would actually use: type in a product name and its NRN number,
 get back a verdict AND a plain-English explanation of why.
 
