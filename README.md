@@ -2,12 +2,6 @@
 
 # AI-06: Fake Drug Text/Barcode Checker
 **Fighting counterfeit medicine in Nigeria with machine learning and NAFDAC's official Greenbook registry**
-![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python&logoColor=white)
-![scikit-learn](https://img.shields.io/badge/scikit--learn-RandomForest-orange?logo=scikit-learn)
-![Status](https://img.shields.io/badge/status-MVP-brightgreen)
-![License](https://img.shields.io/badge/license-MIT-lightgrey)
-
-</div>
 
 ## Overview
 Counterfeit, NAFDAC-numbered drugs are a real and dangerous problem across
@@ -39,81 +33,65 @@ black-box label.
 ```
                 NAFDAC Greenbook (greenbook.nafdac.gov.ng)
                               │
-                     (web scraping)
                               ▼
-              ┌───────────────────────────┐
-              │  01_parse_data.py         │  Clean genuine products
-              │  01b_parse_drugs.py       │  (name, NRN, category)
-              └──────────────┬────────────┘
+              
+                  01_parse_data.py           Clean genuine products (name, NRN, category)
+                  01b_parse_drugs.py        
                               ▼
-              ┌───────────────────────────┐
-              │  02_generate_fakes.py     │  Synthetic "suspicious"
-              │                           │  examples (typos, tampered
-              │                           │  NRNs, fabrications)
-              └──────────────┬────────────┘
+                  02_generate_fakes.py       Synthetic "suspicious" examples (typos, tampered NRNs, fabrications)
                               ▼
-              ┌───────────────────────────┐
-              │  03_features.py           │  Numeric features:
-              │                           │  name similarity, NRN match,
-              │                           │  NRN format, mismatch flag
-              └──────────────┬────────────┘
+                  03_features.py             Numeric features: name similarity, NRN match, NRN format, mismatch flag            
                               ▼
-              ┌───────────────────────────┐
-              │  04_train_model.py        │  Random Forest classifier
-              │                           │  trained + evaluated
-              └──────────────┬────────────┘
+                  04_train_model.py          Random Forest classifier: trained + evaluated            
                               ▼
-              ┌───────────────────────────┐
-              │  05_app.py                │  Interactive checker app
-              │                           │  (the actual MVP tool)
-              └───────────────────────────┘
-```
+                   05_app.py                  Interactive checker app (the actual MVP tool)
+   
 ## Why Synthetic Fakes Drugs?
-NAFDAC's public Greenbook only lists **genuine, approved products** — there
-is no public dataset of confirmed counterfeit entries to train on. To work
-around this, the model is trained on synthetic "suspicious" examples built
-from three real-world counterfeiting patterns:
+NAFDAC's public Greenbook only lists **genuine and approved products** — there
+is no public dataset or list for confirmed counterfeit and fake drugs train with.
+So i used AI to generate fakes, the model is trained on AI generated or synthetic fakes  "suspicious"
+examples built from three real-world counterfeiting patterns:
 
-| Pattern | Example |
-|---|---|
-| **Typo/character-swap names** | `Simulect` → `Simulcet` |
-| **Tampered NRN codes** | `A6-0405` → `A6-0455` |
-| **Fully fabricated products** | `"Super Cure Tablet"` with a made-up NRN |
+Example of these patterns include
+
+**Typo/character-swap names** - `Simulect` → `Simulcet` 
+**Tampered NRN codes** - `A6-0405` → `A6-0455` 
+**Fully fabricated products** - `"Super Cure Tablet"` with a made-up NRN 
 
 This is a standard technique called **negative sampling**, used whenever a
 real-world problem only has confirmed examples of one class.
 
 ## Results
-Evaluated on a held-out 20% test set the model never saw during training:
+Assessed on a 20% held-out test set that the model has never seen during training.
 
-| Metric | Score | What it means |
-|---|---|---|
-| **Accuracy** | 97.2% | Overall correctness |
-| **Recall (genuine)** | **100%** | Never wrongly flags a real drug as fake |
-| **Precision (genuine)** | 92.2% | Of predicted-genuine, how many really are |
-| **F1 Score** | 95.9% | Balance of precision & recall |
+Metrics used for the model, Score for each metric and what it means
+
+**Accuracy** which got 97.2% use to analyze the overall correctness
+**Recall (genuine)** which returned recall **100%,** meaning it will never wrongly flags a real drug as fake
+**Precision (genuine)** that returned 92.2%, meaning its the precision of the app to be able to predict-genuine, no matter many times it was checked. 
+**F1 Score** which returned 95.9%  that balances of precision & recall
 
 **100% recall on genuine products is the number that matters most here** —
 for a tool like this, a false "suspicious" alarm on a real medicine is far
 more dangerous than being cautious about a fake, since it could scare a
-patient away from treatment they actually need.
+patient away from treatment they actually need or they really should get.
 
 **Top features the model relies on:**
-1. `name_similarity` (58.5%) — how close the name is to a real registered product
-2. `name_nrn_mismatch` (22.5%) — does this name+NRN pairing exist for real
-3. `nrn_exact_match` (10%)
-4. `nrn_similarity` (9%)
+1. `name_similarity` (58.5%) — concerned with how close the name is to a real registered product
+2. `name_nrn_mismatch` (22.5%) — does this name + NRN pairing exist for real
+3. `nrn_exact_match` (10%) - Whether the NRN is in the registered database
+4. `nrn_similarity` (9%) - concerned with how close does the requesting nrn matches the database nrn 
 
 ## Project Structure
 ```
 nafdac_checker/
 ├── data/
-│   ├── raw_vaccines.txt              # Raw scraped text (Vaccines/Biologics)
-│   ├── raw_drugs_plaintext.txt       # Raw scraped text (Drugs)
-│   ├── nafdac_products_clean.csv     # 235 genuine products, cleaned
-│   ├── training_data.csv             # Genuine + synthetic-fake, labeled
-│   ├── features.csv                  # Numeric features for training
-│   └── fake_drug_model.joblib        # Trained model, ready to load
+│    raw_vaccines.txt              # Raw scraped text (Vaccines/Biologics)
+│    raw_drugs_plaintext.txt       # Raw scraped text (Drugs)
+│    nafdac_products_clean.csv     # 235 genuine products, cleaned
+│    training_data.csv             # Genuine + synthetic-fake, labeled
+│    features.csv                  # Numeric features for training
+│    fake_drug_model.joblib        # Trained model, ready to load
 ├── 01_parse_data.py                  # Parse Vaccines/Biologics
 ├── 01b_parse_drugs.py                # Parse Drugs (different raw format)
 ├── 02_generate_fakes.py              # Generate synthetic suspicious examples
@@ -127,12 +105,7 @@ nafdac_checker/
 ```
 
 ## Getting Started
-**Requirements:** Python 3.10+
-```bash
-cd nafdac-fake-drug-checker
-pip install pandas scikit-learn joblib requests beautifulsoup4
 ```
-
 Run the pipeline step by step:
 ```bash
 python 01_parse_data.py
@@ -142,7 +115,8 @@ python 03_features.py
 python 04_train_model.py
 python 05_app.py
 ```
-Or open **`Fake_Drug_Checker.ipynb`** in Jupyter/VS Code and click **Run All**
+OR
+Open **`Fake_Drug_Checker.ipynb`** in Jupyter/VS Code and click **Run All**
 to see the entire pipeline — data cleaning, training, and evaluation — in
 one place.
 
@@ -166,14 +140,12 @@ Scraped from the official NAFDAC Greenbook:
 **[greenbook.nafdac.gov.ng](https://greenbook.nafdac.gov.ng)**
 
 ## Limitations & Roadmap
--**Synthetic fakes, not real ones** — production version should validate
+-**Synthetic or generated fakes, not actual fakes were used** — production version should validate
       against real NAFDAC/WHO counterfeit alert bulletins
--**Partial category coverage** in this build — run `scrape_full_nafdac.py`
-      for the full ~1,900+ drug list
--**No barcode/GS1 scanning yet** — text lookup only; `pyzbar` would add
+-**Partial category coverage** in this build, i was only able to use 200+ of the almost 2000
+      datasets on the Nafdac Greenbook Database
+-**No barcode/GS1 scanning yet** — text lookup only available; `pyzbar` would add
       phone-camera barcode support
--**No UI yet** — a Streamlit front-end would make this demoable to
-      non-technical stakeholders (pharmacists, patients, regulators)
 
 ## Author
 **Alhassan Aliyu Liman (Aliyu)**
