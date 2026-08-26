@@ -4,9 +4,8 @@ STEP 1: Parse raw scraped NAFDAC Greenbook text into a clean, structured CSV.
 Why this step matters:
 Web-scraped data is messy — it comes as long strings mixing product name,
 dosage form, active ingredient, strength, and registration number (NRN) all
-together. Before we can do ANY machine learning, we need this in neat rows
-and columns (like a spreadsheet). This is called "data cleaning" and it's
-usually 70% of the work in a real ML project.
+together. The data need to be neat in rows and columns (like a spreadsheet) before any modeling.
+This is called "data cleaning" and it's usually 70% of the work in a real ML project.
 """
 import re
 import csv
@@ -16,7 +15,7 @@ def parse_category_file(filepath, category_name):
     Each line in our raw file looks like:
     [Product Name** Form Ingredient Strength NRN: A6-100070](https://.../details/6931)
 
-    We use a "regular expression" (regex) - a pattern-matching tool - to pull
+    I use a "regular expression" (regex) - a pattern-matching tool - to pull
     out the pieces we care about: the display text, and the NRN code.
     """
     rows = []
