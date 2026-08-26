@@ -1,16 +1,16 @@
 """
 STEP 4: Train a classifier and evaluate it properly.
 
-We use a Random Forest - it builds many small decision trees (e.g. "IF
+I use a Random Forest - it builds many small decision trees (e.g. "IF
 name_similarity < 0.95 AND nrn_exact_match == 0 THEN suspicious") and
-averages their votes. It's a great choice for beginners because:
-  - It handles our small feature set well
+averages the votes. It's a great choice because:
+  - It handles the small feature set well
   - It's hard to badly misconfigure
   - It tells us which features actually mattered (interpretable)
 
-CRITICAL RULE: we NEVER evaluate a model on the same data it trained on -
+CRITICAL RULE: NEVER evaluate a model on the same data it trained on -
 that's like grading a student's exam using the answer key they copied from.
-We split into train/test sets so the model is judged on examples it has
+I split it into train/test sets so the model is judged on examples it has
 never seen.
 """
 import csv
@@ -38,7 +38,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 model = RandomForestClassifier(
     n_estimators=200,   # 200 decision trees voting together
-    max_depth=6,        # keeps trees simple - avoids memorizing noise
+    max_depth=6,        # keeps trees simple - avoids memorizing noise that might alter accuracy
     random_state=42,
 )
 model.fit(X_train, y_train)
@@ -72,6 +72,6 @@ for feat, imp in importances:
     bar = "#" * int(imp * 50)
     print(f"  {feat:<20} {imp:.3f} {bar}")
 
-# Save the trained model to disk so the app can load it instantly
+# Saved the trained model to disk so the app can load it instantly
 joblib.dump(model, "data/fake_drug_model.joblib")
 print("\nModel saved -> data/fake_drug_model.joblib")
