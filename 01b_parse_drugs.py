@@ -1,12 +1,12 @@
 """
-STEP 1b: Parse the Drugs category, which NAFDAC serves in a DIFFERENT raw
-format than Vaccines did - plain text with no [name](url) brackets, just
-one long run-on string of "Name FORM Ingredient Strength NRN: xxx" blocks
-back to back.
+STEP 1b: 
+Break down the Drugs category. NAFDAC provided the Drugs category in a DIFFERENT raw
+format than they did for Vaccines - plain text with no [name](url) brackets, just one long run-on
+string of "Name FORM Ingredient Strength NRN: xxx" blocks back to back.
 
-The trick: NRN codes ("NRN: A4-100160") are the one reliable anchor. We
-split the whole blob on that pattern - everything between one NRN and the
-next NRN belongs to the entry that ends with the second NRN.
+The trick: NRN codes ("NRN: A4-100160") are the one reliable anchor. I split the whole blob on that pattern,
+everything between an NRN and the next NRN is part of the entry that ends with that second NRN.
+
 """
 import re
 import csv
